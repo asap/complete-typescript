@@ -51,19 +51,13 @@ export class Model<T extends hasId> {
   }
 
   save(): void {
-    const id = this.attributes.get('id');
-
-    if (typeof id !== 'number') {
-      throw new Error('Cannot fetch user without ID');
-    } else {
-      this.sync
-        .save(this.attributes.getAll())
-        .then((response: AxiosResponse): void => {
-          this.trigger('save');
-        })
-        .catch(() => {
-          this.trigger('error');
-        });
-    }
+    this.sync
+      .save(this.attributes.getAll())
+      .then((response: AxiosResponse): void => {
+        this.trigger('save');
+      })
+      .catch(() => {
+        this.trigger('error');
+      });
   }
 }
